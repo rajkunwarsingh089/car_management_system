@@ -1,0 +1,51 @@
+<div class="container">
+  <h1>Car Model List</h1>
+  <div class="search-container">
+    <label for="search">Search by Model Name or Model Code:</label>
+    <input type="text" id="search" [(ngModel)]="searchTerm" (input)="searchCarModels()"
+      placeholder="Search by Model Name or Code" />
+  </div>
+  <div *ngIf="copyCarModels.length === 0" class="no-model-found">
+    No Model Found
+  </div>
+  <table *ngIf="copyCarModels.length > 0">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Brand</th>
+        <th>Model Name</th>
+        <th>Model Code</th>
+        <th>Price</th>
+        <th>
+          Date of Manufacturing
+          <button (click)="sortCarModels('dateOfManufacturing')">Sort</button>
+        </th>
+        <th>Active</th>
+        <th>
+          Sort Order
+          <button (click)="sortCarModels('sortOrder', false)">Sort</button>
+        </th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let carModel of copyCarModels">
+        <td>
+          <img [src]="carModel.image" alt="Car Model" width="50" height="50" />
+        </td>
+        <td>{{ carModel.brand }}</td>
+        <td>{{ carModel.modelName }}</td>
+        <td>{{ carModel.modelCode }}</td>
+        <td>{{ carModel.price | currency }}</td>
+        <td>{{ carModel.dateOfManufacturing | date:'dd/MM/yyyy' }}</td>
+        <td>{{ carModel.active ? 'Yes' : 'No' }}</td>
+        <td>{{ carModel.sortOrder }}</td>
+        <td>
+          <button (click)="deleteCarModel(carModel.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<button (click)="redirectToSalesmanCommisionView()">Go to Salesman Comission View</button>
+<button (click)="redirectToModalView()">Go to Modal View</button>

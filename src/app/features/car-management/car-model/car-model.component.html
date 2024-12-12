@@ -1,0 +1,97 @@
+<div class="container">
+  <h1>Car Model Management</h1>
+  <form [formGroup]="carModelForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="fieldNameEnum.Brand">Brand</label>
+      <select id="fieldNameEnum.Brand" formControlName="brand" class="form-control">
+        <option value="">Select Brand</option>
+        <option value="Audi">Audi</option>
+        <option value="Jaguar">Jaguar</option>
+        <option value="Land Rover">Land Rover</option>
+        <option value="Renault">Renault</option>
+      </select>
+      <ng-container *ngTemplateOutlet="errorMessageRef; context: { fieldName: 'brand' }"></ng-container>
+    </div>
+    <div class="form-group">
+      <label for="fieldNameEnum.Class">Class</label>
+      <select id="fieldNameEnum.Class" formControlName="class" class="form-control">
+        <option value="">Select Class</option>
+        <option value="A Class">A-Class</option>
+        <option value="B-Class">B-Class</option>
+        <option value="C-Class">C-Class</option>
+      </select>
+      <ng-container *ngTemplateOutlet="errorMessageRef; context: { fieldName: 'class' }"></ng-container>
+    </div>
+
+
+    <div class="form-group">
+      <label for="fieldNameEnum.ModelName">Model Name</label>
+      <input id="fieldNameEnum.ModelName" formControlName="modelName" />
+      <ng-container *ngTemplateOutlet="errorMessageRef; context: { fieldName: 'modelName' }"></ng-container>
+    </div>
+
+    <div class="form-group">
+      <label for="fieldNameEnum.ModelCode">Model Code</label>
+      <input id="fieldNameEnum.ModelCode" formControlName="modelCode" appCustomValidators />
+      <ng-container *ngTemplateOutlet="errorMessageRef;  context:{fieldName: 'modelCode'}"></ng-container>
+    </div>
+
+    <div class="form-group">
+      <label for="fieldNameEnum.Description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+      <ng-container *ngTemplateOutlet="errorMessageRef; context: { fieldName: 'description' }"></ng-container>
+    </div>
+
+    <div class="form-group">
+      <label for="fieldNameEnum.Features">Features</label>
+      <textarea id="fieldNameEnum.Features" formControlName="features"></textarea>
+      <ng-container *ngTemplateOutlet="errorMessageRef; context: { fieldName: 'features' }"></ng-container>
+    </div>
+
+    <div class="form-group">
+      <label for="fieldNameEnum.Price">Price</label>
+      <input id="fieldNameEnum.Price" type="number" formControlName="price" />
+      <ng-container *ngTemplateOutlet="errorMessageRef; context: { fieldName: 'price' }"></ng-container>
+    </div>
+
+    <div class="form-group">
+      <label for="fieldNameEnum.DateOfManufacturing">Date of Manufacturing</label>
+      <input id="fieldNameEnum.DateOfManufacturing" type="date" formControlName="dateOfManufacturing" />
+      <ng-container *ngTemplateOutlet="errorMessageRef; context: { fieldName: 'dateOfManufacturing' }"></ng-container>
+    </div>
+
+    <div class="form-group">
+      <label for="fieldNameEnum.Active">Active</label>
+      <input id="fieldNameEnum.Active" type="checkbox" formControlName="active" />
+      <ng-container *ngTemplateOutlet="errorMessageRef; context: { fieldName: 'active' }"></ng-container>
+    </div>
+
+    <div class="form-group">
+      <label for="fieldNameEnum.SortOrder">Sort Order</label>
+      <input id="fieldNameEnum.SortOrder" type="number" formControlName="sortOrder" />
+      <ng-container *ngTemplateOutlet="errorMessageRef; context: { fieldName: 'sortOrder' }"></ng-container>
+    </div>
+
+    <button type="submit" [disabled]="carModelForm.invalid">
+      {{ isEditing ? 'Update' : 'Submit' }}
+    </button>
+  </form>
+
+  <h2>Existing Car Models</h2>
+  <ng-container *ngIf="carModels?.length === 0" class="no-model-found">
+    No Model Found
+  </ng-container>
+  <ul>
+    <li *ngFor="let carModel of carModels">
+      {{ carModel?.brand }} {{ carModel?.modelName }} ({{ carModel?.modelCode }})
+      <button (click)="editCarModel(carModel)">Edit</button>
+    </li>
+  </ul>
+  <button (click)="resetForm()">Clear All Fields Value</button>
+</div>
+<button (click)="redirectToModelList()">Go to Model Listing View</button>
+<ng-template #errorMessageRef let-fieldName="fieldName">
+  <div *ngIf="getErrorMessage(fieldName)" class="error">
+    {{ getErrorMessage(fieldName) }}
+  </div>
+</ng-template>

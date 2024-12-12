@@ -1,0 +1,25 @@
+<h2>Salesman Commission Summary</h2>
+<table border="1">
+  <thead>
+    <tr>
+      <th>Salesman</th>
+      <th>Brand</th>
+      <th>Class</th>
+      <th>Number of Cars Sold</th>
+      <th>Price per Car</th>
+      <th>Commission</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let report of salesmanCommissionReports">
+      <td>{{ report?.salesman }}</td>
+      <td>{{ report?.brand }}</td>
+      <td>{{ report?.class }}</td>
+      <td>{{ report?.numberOfCarsSold }}</td>
+      <td>{{ report?.price | currency }}</td>
+      <td>{{ calculateCommission(report) | currency }}</td>
+    </tr>
+  </tbody>
+</table>
+<button (click)="redirectToModelList()">Go to Model Listing View</button>
+  <button (click)="redirectToModalView()">Go to Modal View</button>
